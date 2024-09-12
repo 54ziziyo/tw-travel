@@ -1,10 +1,11 @@
 <template>
   <div>
-    <n-grid cols="2 s:3 m:4" x-gap="12" y-gap="12" responsive="screen">
+    <n-grid cols="2 s:3 m:4" x-gap="20" y-gap="20" responsive="screen">
       <n-grid-item
         v-for="(item, index) in paginatedItems"
         :key="`${item.Id}-${index}`"
-        class="h-[16rem] rounded-2xl p-4 relative cursor-pointer overflow-hidden drop-shadow-lg"
+        @click="goToDetail(item)"
+        class="sm:h-[16rem] h-[12rem] rounded-2xl p-4 relative cursor-pointer overflow-hidden drop-shadow-lg select-none"
       >
         <div 
           v-if="!item.imageLoaded" 
@@ -14,8 +15,9 @@
           :src="store.cleanImageUrl(item.Picture1)"
           @load="item.imageLoaded = true"
           @error="handleImageError(item)"
-          class="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 pointer-events-none"
+          class="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 pointer-events-none select-none"
           :class="{ 'opacity-0': !item.imageLoaded, 'opacity-100': item.imageLoaded }"
+          loading="lazy"
         />
         <div @click.stop="toggleTreasure(item)"
           class="absolute right-0 bg-white top-0 w-[48px] h-[48px] sm:w-[60px] sm:h-[60px] flex justify-center items-center rounded-tr-lg rounded-bl-lg shadow-lg cursor-pointer text-[#FF6F6E]"
@@ -53,14 +55,14 @@
 import { computed, ref, watch } from 'vue'
 import { NGrid, NGridItem, NPagination, NIcon } from 'naive-ui'
 import { HeartSharp, HeartOutline, LocationSharp } from '@vicons/ionicons5'
-import { useDataStore } from '../stores/dataStore'
+import { useDataStore } from '@/stores/dataStore'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const store = useDataStore()
 
 const paginatedItems = computed(() => store.paginatedItems)
 const totalPages = computed(() => store.totalPages)
-
-console.log(store.paginatedItems)
 
 const handlePageChange = (page) => {
   store.setPage(page)
@@ -73,7 +75,7 @@ function handleImageError(item) {
 
 // 添加切換收藏的方法
 const toggleTreasure = (item) => {
-    store.toggleTreasure(item)
+  store.toggleTreasure(item)
 }
 function selectTreasure(item) {
   console.log(item)
@@ -81,7 +83,6 @@ function selectTreasure(item) {
 
 const isItemTreasure = (item) => {
   const result = store.isTreasure(item)
-  console.log(`Is ${item.Name} (${item.Id}) a treasure? ${result}`)
   return result
 }
 
@@ -90,6 +91,11 @@ watch(paginatedItems, (newItems) => {
   // 强制重新评估每个项目的收藏状态
   newItems.forEach(item => isItemTreasure(item))
 }, { immediate: true })
+
+const goToDetail = (item) => {
+  localStorage.setItem('currentItem', JSON.stringify(item));
+  router.push(`/${item.Name}`);
+}
 </script>
 <style scoped>
 :deep(

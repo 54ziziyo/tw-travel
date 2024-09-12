@@ -36,8 +36,6 @@ export const useDataStore = defineStore('data', {
     },
     // 檢查項目是否被收藏
     isTreasure: (state) => (item) => {
-      console.log('Checking item:', item.Id) // 添加这行来检查正在比较的项目
-      console.log('Current treasures:', state.treasures) // 添加这行来检查当前的收藏列表
       return state.treasures.some(t => t.Id === item.Id)
     },
   },

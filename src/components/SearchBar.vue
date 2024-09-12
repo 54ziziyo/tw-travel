@@ -1,30 +1,6 @@
-<script setup>
-import { ref, computed } from 'vue'
-import { NIcon } from 'naive-ui'
-import { ChevronDownOutline, Search, MapOutline } from '@vicons/ionicons5'
-import { useDataStore } from '../stores/dataStore'
-
-const store = useDataStore()
-
-const regions = computed(() => store.regions)
-const towns = computed(() => store.towns)
-
-const selectRegion = (region) => {
-  store.setRegion(region)
-}
-
-const selectTown = (town) => {
-  store.setTown(town)
-}
-
-const search = () => {
-  store.search()
-}
-</script>
-
 <template>
   <div
-    class="flex sm:justify-center items-center space-x-2 sm:space-x-5 h-[50px] justify-start ml-5"
+    class="flex sm:justify-center items-center space-x-2 sm:space-x-5 h-[50px] justify-start ml-5 select-none text-[#00204A]"
   >
     <div class="relative">
       <div
@@ -88,3 +64,26 @@ const search = () => {
     </div>
   </div>
 </template>
+<script setup>
+import { ref, computed } from 'vue'
+import { NIcon } from 'naive-ui'
+import { ChevronDownOutline, Search, MapOutline } from '@vicons/ionicons5'
+import { useDataStore } from '../stores/dataStore'
+
+const store = useDataStore()
+
+const regions = computed(() => store.regions)
+const towns = computed(() => store.towns)
+
+const selectRegion = (region) => {
+  store.setRegion(region)
+}
+
+const selectTown = (town) => {
+  store.setTown(town)
+}
+
+const search = () => {
+  store.search()
+}
+</script>

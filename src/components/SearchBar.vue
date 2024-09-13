@@ -53,7 +53,7 @@
         <n-icon size="25"><Search /></n-icon>
       </div>
     </div>
-    <div class="absolute right-0">
+    <div class="absolute right-0" @click="goToMap">
       <div
         class="rounded-full items-center drop-shadow-lg bg-white flex space-x-1 cursor-pointer sm:h-[50px] h-[40px] sm:w-[50px] w-[40px] mr-5 sm:mr-24 justify-center"
       >
@@ -69,7 +69,9 @@ import { ref, computed } from 'vue'
 import { NIcon } from 'naive-ui'
 import { ChevronDownOutline, Search, MapOutline } from '@vicons/ionicons5'
 import { useDataStore } from '../stores/dataStore'
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const store = useDataStore()
 
 const regions = computed(() => store.regions)
@@ -85,5 +87,9 @@ const selectTown = (town) => {
 
 const search = () => {
   store.search()
+}
+
+const goToMap = () => {
+  router.push({ name: 'Map'})
 }
 </script>

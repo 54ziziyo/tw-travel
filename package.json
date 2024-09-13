@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "debounce": "^2.1.1",
+    "leaflet": "^1.9.4",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^4.0.1",
     "sass-embedded": "^1.78.0",

@@ -1,12 +1,10 @@
 <template>
   <div>
     <Header region-title selector/>
-    <div class="px-5 sm:px-20 pt-14 sm:pt-20">
-      <div v-if="noDataMessage" class="mt-4 text-center text-red-500 text-lg">
-        {{ noDataMessage }}
+    <div v-if="store.filteredItems.length > 0" class="px-5 sm:px-20 pt-14 sm:pt-20"><ItemGrid/></div>
+      <div v-else class="flex justify-center items-center sm:pt-[12rem] pt-[8rem]">
+        <n-empty description="目前尚未完整，敬請期待！" size="huge"></n-empty>
       </div>
-      <ItemGrid v-else-if="store.filteredItems.length > 0" />
-    </div>
   </div>
 </template>
 
@@ -15,14 +13,13 @@ import { onMounted, onUnmounted, ref } from 'vue'
 import { useDataStore } from '../stores/dataStore'
 import Header from '../components/Header.vue'
 import ItemGrid from '../components/ItemGrid.vue'
+import { NEmpty } from 'naive-ui'
 
 const store = useDataStore()
-const noDataMessage = ref('')
 
 onMounted(async () => {
   await Promise.all([store.fetchCityData(), store.fetchData()])
   document.addEventListener('click', handleOutsideClick)
-  noDataMessage.value = store.noDataMessage
 })
 
 onUnmounted(() => {

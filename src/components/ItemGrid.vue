@@ -88,7 +88,7 @@ const isItemTreasure = (item) => {
 
 watch(paginatedItems, (newItems) => {
   console.log('PaginatedItems updated:', newItems)
-  // 强制重新评估每个项目的收藏状态
+  // 強制重新評估每個項目的收藏狀態
   newItems.forEach(item => isItemTreasure(item))
 }, { immediate: true })
 

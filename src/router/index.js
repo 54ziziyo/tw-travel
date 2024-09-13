@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 // 使用動態導入
 const Home = () => import('../views/Home.vue')
 const Detail = () => import('../views/Detail.vue')
-// ... 其他頁面的動態導入
+const Map = () => import('../views/Map.vue')
 
 const routes = [
   {
@@ -16,7 +16,11 @@ const routes = [
     name: 'Detail',
     component: Detail
   },
-  // ... 其他路由
+  {
+    path: '/map',
+    name: 'Map',
+    component: Map
+  }
 ]
 
 const router = createRouter({

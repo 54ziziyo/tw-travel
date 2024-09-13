@@ -127,10 +127,10 @@ export const useDataStore = defineStore('data', {
     toggleTreasure(item) {
       const index = this.treasures.findIndex(t => t.Id === item.Id)
       if (index > -1) {
-        // 如果项目已存在，则移除它
+        // 如果項目已存在，則移除它
         this.treasures.splice(index, 1)
       } else {
-        // 如果项目不存在，则添加它
+        // 如果項目不存在，則添加它
         this.treasures.push(item)
       }
       // 保存到 localStorage

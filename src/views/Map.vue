@@ -16,6 +16,16 @@
         />
       </router-link>
     </div>
+    <div class="absolute sm:bottom-[5%] bottom-[2%] left-[50%] translate-x-[-50%] w-[82%] overflow-x-auto hover-scrollbar" ref="scrollContainer" style="z-index: 1000">
+      <div class="flex space-x-4 pb-2 inline-flex">
+        <div v-for="item in mapPageArr" :key="item.Name" class="flex-shrink-0 rounded-lg shadow-lg p-4 bg-white w-[10rem] h-[10rem] bg-cover bg-center bg-no-repeat" 
+        :style="{ backgroundImage: `url(${item.picture})` }">
+          <div class="font-bold mb-2 text-white">{{ item.name }}</div>
+          <div class="text-sm text-gray-600">{{ item.region }} {{ item.town }}</div>
+          <div class="text-sm mt-2">{{ item.add }}</div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script setup>
@@ -38,6 +48,7 @@ const loadedFromLocalStorage = ref(mapPageArr.value.length > 0)
 const mapContainer = ref(null)
 const map = ref(null)
 const markers = ref([])
+const scrollContainer = ref(null)
 
 const loadItemData = () => {
   const storedItem = localStorage.getItem('localMapPageArr')
@@ -52,6 +63,10 @@ onMounted(async () => {
   if (mapPageArr.value.length > 0) {
     initMap()
     addMarkers()
+  }
+  
+  if (scrollContainer.value) {
+    scrollContainer.value.addEventListener('wheel', handleHorizontalScroll, { passive: false })
   }
 })
 
@@ -118,7 +133,11 @@ watch(
       mapPageArr.value = newItems.map((item) => ({
         name: item.Name,
         px: item.Px,
-        py: item.Py
+        py: item.Py,
+        picture: item.Picture1,
+        region: item.Region,
+        town: item.Town,
+        add: item.Add,
       }))
       loadedFromLocalStorage.value = false // 重置標誌
     }
@@ -130,7 +149,18 @@ onUnmounted(() => {
   if (map.value) {
     map.value.remove()
   }
+  
+  if (scrollContainer.value) {
+    scrollContainer.value.removeEventListener('wheel', handleHorizontalScroll)
+  }
 })
+
+function handleHorizontalScroll(e) {
+  if (e.deltaY !== 0) {
+    e.preventDefault()
+    scrollContainer.value.scrollLeft += e.deltaY * 2 // 增加滾動速度
+  }
+}
 </script>
 <style scoped>
 #map {

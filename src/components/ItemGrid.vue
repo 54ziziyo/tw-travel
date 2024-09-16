@@ -77,9 +77,6 @@ function handleImageError(item) {
 const toggleTreasure = (item) => {
   store.toggleTreasure(item)
 }
-function selectTreasure(item) {
-  console.log(item)
-}
 
 const isItemTreasure = (item) => {
   const result = store.isTreasure(item)

@@ -24,9 +24,9 @@
         <n-icon size="30" class="text-white cursor-pointer"><HeartSharp /></n-icon>
         </div>
     </div>
-    <div class="absolute sm:bottom-[2%] bottom-[2%] left-[50%] translate-x-[-50%] w-[90%] overflow-x-auto hover-scrollbar" ref="scrollContainer" style="z-index: 1000">
+    <div class="absolute sm:bottom-[2%] bottom-[5%] left-[50%] px-8 translate-x-[-50%] w-[100%] overflow-x-auto hover-scrollbar" ref="scrollContainer" style="z-index: 1000">
       <div class="flex space-x-6 pb-2 inline-flex text-white">
-        <div v-for="item in mapPageArr" :key="item.Name" class="drop-shadow-lg relative flex-shrink-0 rounded-lg shadow-lg p-4 cursor-pointer bg-white w-[15rem] h-[15rem] bg-cover bg-center bg-no-repeat" 
+        <div v-for="item in mapPageArr" :key="item.Name" class="drop-shadow-lg relative flex-shrink-0 rounded-lg shadow-lg p-4 cursor-pointer bg-white sm:w-[15rem] sm:h-[15rem] w-[10rem] h-[10rem] bg-cover bg-center bg-no-repeat" 
         :style="{ backgroundImage: `url(${item.Picture1})` }" @click="goToDetail(item)">
         <div class="absolute bottom-4">
          <div class="py-1 px-2 bg-[#FF6F6E] text-[12px] sm:text-[16px] w-fit text-white rounded-md drop-shadow-[1px_1px_2px_rgba(0,0,0,0.8)]">
